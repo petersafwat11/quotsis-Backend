@@ -12,5 +12,15 @@ router
   .get(chargesController.getCharge)
   .patch(chargesController.updateCharge)
   .delete(chargesController.deleteCharge);
+router
+  .route("/termsAndConditions")
+  .get(chargesController.getAllTerms)
+  .post(chargesController.createTerm);
+
+router
+  .route("/termsAndConditions/:id")
+  .get(chargesController.getTerm)
+  .patch(chargesController.updateTerm)
+  .delete(chargesController.deleteTerm);
 
 module.exports = router;
