@@ -32,7 +32,7 @@ app.use(express.json());
 
 app.use("/api/users", userRoutes);
 app.use("/api/margins", marginsRoutes);
-app.use("/api/surchrgeTypes", surchrgeTypesRoutes);
+app.use("/api/surchargeTypes", surchrgeTypesRoutes);
 app.use("/api/organization", organanzationsRoutes);
 app.use("/api/termsAndConditions", termsAndConditionsRoutes);
 app.use("/api/countries", countriesRoutes);

@@ -4,18 +4,43 @@ class APIFeatures {
     this.queryString = queryString;
   }
 
+  // filter() {
+  //   const queryObj = { ...this.queryString };
+  //   const excludedFields = ["page", "sort", "limit", "fields"];
+  //   excludedFields.forEach((el) => delete queryObj[el]);
+
+  //   if (Object.keys(queryObj).length) {
+  //     this.query.where(queryObj);
+  //   }
+
+  //   return this;
+  // }
   filter() {
     const queryObj = { ...this.queryString };
-    const excludedFields = ["page", "sort", "limit", "fields"];
+    const excludedFields = ["page", "sort", "limit", "fields", "searchValue", "or"];
     excludedFields.forEach((el) => delete queryObj[el]);
-
-    if (Object.keys(queryObj).length) {
-      this.query.where(queryObj);
+  
+    // Basic filtering with direct matches
+    Object.keys(queryObj).forEach((key) => {
+      this.query.where(key, queryObj[key]);
+    });
+  
+    // Handle "or" and "searchValue" if provided
+    if (this.queryString.or && this.queryString.searchValue) {
+      const searchFields = this.queryString.or; // Assuming an array, e.g., ["name", "description"]
+      const searchValue = this.queryString.searchValue;
+  
+      // Build an OR condition for each specified field with the search value
+      this.query.andWhere((qb) => {
+        searchFields.forEach((field) => {
+          qb.orWhereILike(field, `%${searchValue}%`);
+        });
+      });
     }
-
+  
     return this;
   }
-
+  
   sort() {
     if (this.queryString.sort) {
       const sortBy = this.queryString.sort.split(",").join(" ");

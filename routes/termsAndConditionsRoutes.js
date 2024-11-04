@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const termsAndConditionsController = require("../controllers/termsAndConditionsController");
 
+router.route("/one").get(termsAndConditionsController.getOne);
 router
   .route("/")
   .get(termsAndConditionsController.getAllTerms)
