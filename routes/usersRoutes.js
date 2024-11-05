@@ -5,16 +5,22 @@ const authController = require("../controllers/authController");
 const router = express.Router();
 
 // router.use(authController.restrictTo("Admin"));
+router.post("/login", authController.login);
+router.post("/signup", authController.signup);
+router.get("/logout", authController.logout);
+
 router
   .route("/")
   .get(usersController.getAllUsers)
   .post(usersController.createUser);
+router
+  .route("/:id")
+  .get(usersController.getUser)
+  .patch(usersController.updateUser);
+
 //   .delete(usersController.deleteManyUsers);
 
 // router.post("/signup", authController.signup);
-router.post("/login", authController.login);
-router.post("/signup", authController.signup);
-router.get("/logout", authController.logout);
 
 // router.post("/forgotPassword", authController.forgotPassword);
 // router.patch("/resetPassword/:token", authController.resetPassword);

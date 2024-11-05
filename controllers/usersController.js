@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const handlers = require("./handelerFactory");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const db = require("../config/db"); // Your db connection via Knex
@@ -68,3 +69,5 @@ exports.getAllTables = async (req, res, next) => {
     console.error("Error retrieving tables:", error);
   }
 };
+exports.getUser = handlers.getOne("dba.qru_access");
+exports.updateUser = handlers.updateOne("dba.qru_access");
